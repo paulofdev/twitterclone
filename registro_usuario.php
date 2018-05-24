@@ -4,7 +4,7 @@
 	
 	$usr = $_POST['usuario'];
 	$mail = $_POST['email'];
-	$pw = $_POST['senha'];
+	$pw = md5($_POST['senha']);
 
 
 	$objDb = new db();
