@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 	$erro = isset($_GET['erro']) ? $_GET['erro'] : 0;
 
@@ -15,7 +15,7 @@
 
 	<!-- bootstrap - link cdn -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-	
+
 		<script>
 			$(document).ready(function(){
 
@@ -23,23 +23,23 @@
 
 				$('#btn_login').click(function(){
 					if($('#campo_usuario').val() == ''){
-						$('#campo_usuario').css({'border-color':'#dc3030'});
-						var null_form = true;
+							$('#campo_usuario').css({'border-color':'#dc3030'});
+							var null_form = true;
 					} else {
 						$('#campo_usuario').css({'border-color':'#ccc'});
 					}
 
 					if ($('#campo_senha').val() == '') {
-						$('#campo_senha').css({'border-color':'#dc3030'});
-						var null_form = true;
+							$('#campo_senha').css({'border-color':'#dc3030'});
+							var null_form = true;
 					} else {
 						$('#campo_senha').css({'border-color':'#ccc'});
 
 					}
-					
+
 					if (null_form) return false;
 				});
-			});				
+			});
 		</script>
 	</head>
 
@@ -70,7 +70,7 @@
 										<form method="post" action="authenticate.php" id="formLogin">
 
 											<div class="form-group">
-												<input type="text" class="form-control" id="campo_usuario" 
+												<input type="text" class="form-control" id="campo_usuario"
 												name="login" placeholder="Usuário" />
 											</div>
 
@@ -80,7 +80,7 @@
 
 											<button type="buttom" class="btn btn-primary" id="btn_login">Entrar</button><br>
 											<br>
-											<?php 
+											<?php
 												if ($erro == 1) {
 													echo '<font color="#dc3030">E-mail e/ou senha inválidos</font>';
 												}

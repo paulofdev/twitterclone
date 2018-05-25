@@ -1,39 +1,40 @@
 <?php
-	
-	session_start();
 
-	require_once('db_class.php');
+session_start();
 
-	$user = $_POST['login'];
-	$pswrd = md5($_POST['password']);
+require_once('db_class.php');
 
-	$sql = "SELECT usuario, email FROM usuarios where usuario='$user' AND senha='$pswrd' ";
+$user = $_POST['login'];
+$pswrd = md5($_POST['password']);
 
-	$objDb = new db();
-	$link = $objDb->connMysql();
+$sql = "SELECT id, usuario, email FROM usuarios where usuario='$user' AND senha='$pswrd' ";
 
-	$result_id = mysqli_query($link, $sql);
+$objDb = new db();
+$link = $objDb->connMysql();
 
-	if ($result_id) {
-		$user_date = mysqli_fetch_array($result_id);
-		
-			if (isset($user_date['usuario'])) {
+$result_id = mysqli_query($link, $sql);
 
-				$_SESSION['usuario'] = $user_date['usuario'];
-				$_SESSION['email'] = $user_date['email'];
-	
+if ($result_id) {
+	$user_date = mysqli_fetch_array($result_id);
 
-				header('Location: home.php');
+	if (isset($user_date['usuario'])) {
 
-			} else {
+		$_SESSION['id_usuario'] = $user_date['id'];
+		$_SESSION['usuario'] = $user_date['usuario'];
+		$_SESSION['email'] = $user_date['email'];
 
-				header('Location: index.php?erro=1');
 
-			}
+		header('Location: home.php');
 
 	} else {
-		echo "Usuario e/ou senha inválidos";
+
+		header('Location: index.php?erro=1');
+
 	}
+
+} else {
+	echo "Usuario e/ou senha inválidos";
+}
 
 
 
