@@ -36,6 +36,16 @@
 				} 
 
 			});
+
+			function atualizaTweet(){
+				$.ajax({
+					url:'get_tweet.php',
+					success: function(data){
+						$('#tweets').html(data);
+					}
+				});
+			}
+			atualizaTweet();
 		});
 
 		</script>
@@ -92,15 +102,18 @@
 
 	    	<div class="col-md-6">
 	    		<div class="panel panel-default">
-    					<div class="panel-body">	
-							<form method="post" id="form_tweet" class="input-group" name="texto_tweet">	
-								<input type="text" class="form-control" 
-								placeholder="O que está acontecendo agora?" maxlength="140" id="texto_tweet" name="texto_tweet" />   
-								<span class="input-group-btn">
-									<button class="btn btn-default" id="btn_tweet" type="button">Tweet</button>
-								</span>
-							</form>
-    					</div>
+					<div class="panel-body">	
+						<form method="post" id="form_tweet" class="input-group" name="texto_tweet">	
+							<input type="text" class="form-control" 
+							placeholder="O que está acontecendo agora?" maxlength="140" id="texto_tweet" name="texto_tweet" />   
+							<span class="input-group-btn">
+								<button class="btn btn-default" id="btn_tweet" type="button">Tweet</button>
+							</span>
+						</form>
+					</div>
+    			</div>
+    			<div id="tweets" class="list-group">
+    				
     			</div>
 			</div>
 			<div class="col-md-3">
