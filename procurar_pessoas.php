@@ -20,35 +20,47 @@
 
 		<script type="text/javascript">	
 		$(document).ready(function(){
-			$('#btn_tweet').click(function(){
+			$('#btn_procurar_pessoa').click(function(){
 
-				if ($('#texto_tweet').val().length > 0) {
+				if ($('#nome_pessoas').val().length > 0) {
 
 					$.ajax({
-						url: 'inclui_tweet.php',
+						url: 'get_pessoas.php',
 						method: 'post',
-						data: $('#form_tweet').serialize(),
+						data: $('#form_procurar_pessoas').serialize(),
 						success: function(data) {
-							$('#texto_tweet').val('');
-							atualizaTweet();
+                            $('#pessoas').html(data);
+
+							$('.btn_seguir').click(function() {
+								var id_usuario = $(this).data('id_usuario');
+								$.ajax({
+									url: 'seguir.php',
+									method: 'post',
+									data: {seguir_id_usuario: id_usuario},
+									success: function(data){
+										alert('seguindo');
+									}
+								});
+							});
+
+							$('.btn_unfollow').click(function(){
+								var id_usuario = $(this).data('id_usuario');
+								$.ajax({
+									url: 'deixar_seguir.php',
+									method: 'post',
+									data: {unfollow: id_usuario},
+									success: function(data){
+										alert("registro removido com sucesso");
+									}
+								});
+							});
 						}
 					});
 
 				} 
 
 			});
-
-			function atualizaTweet(){
-				$.ajax({
-					url:'get_tweet.php',
-					success: function(data){
-						$('#tweets').html(data);
-					}
-				});
-			}
-			atualizaTweet();
 		});
-
 		</script>
 	
 	</head>
@@ -71,9 +83,8 @@
 	        
 	        <div id="navbar" class="navbar-collapse collapse">
 	          <ul class="nav navbar-nav navbar-right">
-				<li><a href=""><?=$_SESSION['usuario']?> </a></li>
-	            <li><a href="sair.php">- Sair</a></li>
-			  </ul>
+	            <li><a href="home.php">Home</a></li>
+	          </ul>
 	        </div><!--/.nav-collapse -->
 	      </div>
 	    </nav>
@@ -105,23 +116,24 @@
 	    	<div class="col-md-6">
 	    		<div class="panel panel-default">
 					<div class="panel-body">	
-						<form method="post" id="form_tweet" class="input-group" name="texto_tweet">	
+
+						<form method="post" id="form_procurar_pessoas" class="input-group" name="procurar_pessoa">	
 							<input type="text" class="form-control" 
-							placeholder="O que está acontecendo agora?" maxlength="140" id="texto_tweet" name="texto_tweet" />   
+							placeholder="Quem você está procurando?" maxlength="140" id="nome_pessoas" name="nome_pessoa" />   
 							<span class="input-group-btn">
-								<button class="btn btn-default" id="btn_tweet" type="button">Tweet</button>
+								<button class="btn btn-default" id="btn_procurar_pessoa" type="button">Buscar</button>
 							</span>
 						</form>
+
 					</div>
     			</div>
-    			<div id="tweets" class="list-group">
+    			<div id="pessoas" class="list-group">
     				
     			</div>
 			</div>
 			<div class="col-md-3">
 				<div class="panel panel-default">	
-						<div class="panel-body">	
-								<h4><a href="procurar_pessoas.php">Procurar por pessoas</a></h4>
+						<div class="panel-body">
 						</div>
 				</div>
 			</div>

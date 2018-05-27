@@ -12,3 +12,9 @@ create table tweet(
 	data_inclusao datetime default current_timestamp
 );
 
+create table usuarios_seguidores(
+	id_usuario_seguidor int not null primary key auto_increment,
+	id_usuario int not null,
+	seguindo_id_usuario int not null,
+	data_registro DATETIME default current_timestamp
+);
