@@ -6,7 +6,7 @@ class db{
 
 	private $user = "root";
 
-	private $password = "";
+	private $password = "root";
 
 	private $db = "twitter_clone"; 
 
