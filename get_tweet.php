@@ -13,7 +13,7 @@ $id_usuario = $_SESSION['id_usuario'];
 $objDB = new db();
 $link = $objDB->connMysql();
 
-$sql = "SELECT  DATE_FORMAT(t.data_inclusao, '%d %m %Y %T') AS dt_inclusao, t.tweet, u.usuario FROM tweet AS t JOIN usuarios AS u ON(t.id_usuario = u.id) WHERE id_usuario = $id_usuario ORDER BY data_inclusao DESC";
+$sql = "SELECT  DATE_FORMAT(t.data_inclusao, '%d %m %Y %T') AS dt_inclusao, t.tweet, u.usuario FROM tweet AS t JOIN usuarios AS u ON(t.id_usuario = u.id) WHERE id_usuario = $id_usuario OR id_usuario IN (select seguindo_id_usuario from usuarios_seguidores where id_usuario = $id_usuario) ORDER BY data_inclusao DESC";
 
 
 

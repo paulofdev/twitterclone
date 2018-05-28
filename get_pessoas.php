@@ -14,7 +14,7 @@ $id_usuario = $_SESSION['id_usuario'];
 $objDB = new db();
 $link = $objDB->connMysql();
 
-$sql = "SELECT * FROM usuarios WHERE usuario like '%$nome_pessoa%' AND id <> $id_usuario";
+$sql = "SELECT u.*, us.* FROM usuarios AS u LEFT JOIN usuarios_seguidores AS us ON (us.id_usuario = $id_usuario AND u.id = us.seguindo_id_usuario) WHERE u.usuario like '%$nome_pessoa%' AND u.id <> $id_usuario ";
 
 $resultado_id = mysqli_query($link, $sql);
 
@@ -23,9 +23,21 @@ if ($resultado_id) {
 		echo "<a href='' class='list-group-item'>";
 			echo '<strong>'.$registro["usuario"].'</strong> <small> - '.$registro["email"].' </small>';
 			echo '<p class="list-group-item-text pull-right">';
-				echo '<button type="button" class="btn btn-success btn_seguir" data-id_usuario="'.$registro['id'].'" >Seguir</button>';
+
+				$esta_seguindo_usuario_sn = isset($registro['id_usuario_seguidor']) && !empty($registro['id_usuario_seguidor']) ? 'S' : 'N';
+				
+				$btn_seguir_display = 'block';
+				$btn_deixar_seguir = 'block';
+
+				if($esta_seguindo_usuario_sn == 'N'){
+					$btn_deixar_seguir = 'none';
+				} else {
+					$btn_seguir_display = 'none';
+				}
+
+				echo '<button type="button" class="btn btn-success btn_seguir" style="display:'.$btn_seguir_display.'" id="btn_seguir_'.$registro['id'].'" data-id_usuario="'.$registro['id'].'">Seguir</button>';
 				echo '&nbsp&nbsp&nbsp&nbsp';
-				echo '<button type="button" class="btn btn-danger btn_unfollow" data-id_usuario="'.$registro['id'].'" >Deixar de seguir</button>';
+				echo '<button type="button" style="display:'.$btn_deixar_seguir.'" id="btn_nseguir_'.$registro['id'].'" class="btn btn-danger btn_unfollow" data-id_usuario="'.$registro['id'].'">Deixar de seguir</button>';
 			echo '</p>'; 
 			echo '<div class="clearfix"> </div> ';
 		echo "</a>";
